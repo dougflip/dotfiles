@@ -1,0 +1,170 @@
+# Your snippets
+#
+# Atom snippets allow you to enter a simple prefix in the editor and hit tab to
+# expand the prefix into a larger code block with templated values.
+#
+# You can create a new snippet in this file by typing "snip" and then hitting
+# tab.
+#
+# An example CoffeeScript snippet to expand log to console.log:
+#
+# '.source.coffee':
+#   'Console log':
+#     'prefix': 'log'
+#     'body': 'console.log $1'
+#
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# https://atom.io/docs/latest/using-atom-basic-customization#cson
+'.source.elm':
+  'main-program':
+    'prefix': 'main-program'
+    'body': """
+        import Html.App exposing (program)
+        import $1 exposing (init, view, update, subscriptions)
+
+        main = program
+          { init = (init, Cmd.none)
+          , update = update
+          , subscriptions = subscriptions
+          , view = view
+          }
+      """
+  'component':
+    'prefix': 'component'
+    'body': """
+      module $1 exposing (init, view, update, subscriptions)
+
+      import Html exposing (..)
+      import Html.Attributes exposing (..)
+      import Html.Events exposing (..)
+
+      -- Model
+
+      type alias Model
+          = { field: String }
+
+      init : Model
+      init = Model ""
+
+      -- Update
+
+      type Msg
+          = Change String
+
+      update : Msg -> Model -> (Model, Cmd Msg)
+      update msg model = case msg of
+          Change field -> (Model field, Cmd.none)
+
+      -- SUBSCRIPTION
+
+      subscriptions : Model -> Sub Msg
+      subscriptions model = Sub.none
+
+      -- View
+      view : Model -> Html Msg
+      view model =
+          div [] [text "Starter!"]
+    """
+
+'.source.js':
+  'Use Strict':
+    'prefix': 'us'
+    'body': '''
+      'use strict';
+
+
+    '''
+  'Console.Log':
+    'prefix': 'cl'
+    'body': """
+      console.log('=====================');
+      console.log($1);
+      console.log('=====================');
+    """
+  'Angular Test':
+    'prefix': 'ngtest'
+    'body':"""
+      'use strict';
+
+      /* global angular, module, require */
+      describe('$1', () =>{
+        const ngMock = window.angular.mock;
+
+        let sut;
+        let mocks;
+
+        beforeEach(ngMock.module(require('$2').name));
+
+        describe('construction', () => {
+
+          it('should be defined', () => {
+            expect(sut).toBeDefined();
+          });
+
+        });
+      });
+
+    """
+  'Angular Test Mocks':
+    'prefix': 'ngtestmocks'
+    'body': """
+
+    beforeEach(ngMock.module(($provide) => {
+      mocks = {
+          $1: $2
+      };
+
+      angular.forEach(mocks, (value, key) => {
+        $provide.value(key, value);
+      });
+    }));
+    """
+  'Angular Test Controller Injection':
+    'prefix': 'ngtestctrl'
+    'body': """
+      beforeEach(ngMock.inject($controller => {
+        sut = $controller('$1', { $scope: {}});
+      }));
+    """
+  'Jasmine Describe':
+    'prefix': 'de'
+    'body': 'describe(\'$1\', () => {\n\n});'
+  'Jasmine It':
+    'prefix': 'it'
+    'body': 'it(\'should $1\', () => {\n\n});'
+  'Jasmine BeforeEach':
+    'prefix': 'be'
+    'body': """
+      beforeEach(() => {
+
+      });
+    """
+  'Jasmine BeforeEach Injected':
+    'prefix': 'bei'
+    'body': """
+      beforeEach(ngMock.inject($1 => {
+
+      }));
+    """
+  'Angular Directive':
+    'prefix': 'ngdir'
+    'body': """
+    us$4
+    function $1(){
+        return {
+            templateUrl: $2,
+            controller: $3,
+            controllerAs: 'ctrl',
+            bindToController: true,
+            scope: {}
+        };
+    }
+
+    function $3(){}
+
+    module.exports = [$1];
+    """
